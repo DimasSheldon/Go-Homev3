@@ -4,6 +4,7 @@
     android:id="@+id/cv_control"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/widgetCard_margin_bottom"
     android:layout_marginEnd="@dimen/widgetCard_margin_end"
     android:layout_marginStart="@dimen/widgetCard_margin_start"
     android:layout_marginTop="@dimen/widgetCard_margin_top"
@@ -22,9 +23,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:checked="false"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp" />
+            android:layout_marginRight="16dp"
+            android:checked="false" />
 
         <TextView
             android:id="@+id/widget_label_control"

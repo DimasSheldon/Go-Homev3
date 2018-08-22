@@ -3,6 +3,7 @@ package sheldon.com.android.gohomev2.activities;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -36,6 +37,7 @@ import sheldon.com.android.gohomev2.asynctask.LoopJ;
 import sheldon.com.android.gohomev2.asynctask.LoopJListener;
 import sheldon.com.android.gohomev2.fragments.ControlFragment;
 import sheldon.com.android.gohomev2.fragments.MonitorFragment;
+import sheldon.com.android.gohomev2.helper.BottomNavigationViewBehavior;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, LoopJListener {
@@ -75,6 +77,8 @@ public class MainActivity extends AppCompatActivity
 
         bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) bottomNavigation.getLayoutParams();
+        layoutParams.setBehavior(new BottomNavigationViewBehavior());
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -149,9 +153,6 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_control:
                 viewPager.setCurrentItem(1);
-                break;
-            case R.id.nav_management:
-//                viewPager.setCurrentItem(1);
                 break;
             case R.id.nav_logout:
                 Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
@@ -230,9 +231,6 @@ public class MainActivity extends AppCompatActivity
                     return true;
                 case R.id.navigation_dashboard:
                     viewPager.setCurrentItem(1);
-                    return true;
-                case R.id.navigation_notifications:
-
                     return true;
             }
             return false;

@@ -13,8 +13,11 @@
     <dimen name="constraintLayout_bottom_margin">15dp</dimen>
     <dimen name="widgetCard_margin_end">8dp</dimen>
     <dimen name="widgetCard_margin_start">8dp</dimen>
-    <dimen name="widgetCard_margin_top">16dp</dimen>
+    <dimen name="widgetCard_margin_top">8dp</dimen>
+    <dimen name="widgetCard_margin_bottom">8dp</dimen>
     <dimen name="widget_corner_radius">8dp</dimen>
-    <dimen name="widget_elevation">15dp</dimen>
-    <dimen name="recyclerview_margin_bottom">15dp</dimen>
+    <dimen name="widget_elevation">8dp</dimen>
+    <dimen name="recyclerview_margin_bottom">12dp</dimen>
+    <dimen name="recyclerview_margin_top">12dp</dimen>
+
 </resources>

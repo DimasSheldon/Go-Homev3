@@ -7,6 +7,7 @@
     android:layout_marginEnd="@dimen/widgetCard_margin_end"
     android:layout_marginStart="@dimen/widgetCard_margin_start"
     android:layout_marginTop="@dimen/widgetCard_margin_top"
+    android:layout_marginBottom="@dimen/widgetCard_margin_bottom"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
