@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="tab_max_width">264dp</dimen>
+    <dimen name="tab_padding_bottom">16dp</dimen>
+    <dimen name="tab_name">14sp</dimen>
+    <dimen name="custom_tab_layout_height">72dp</dimen>
+
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="constraintLayout_bottom_margin">15dp</dimen>
+    <dimen name="widgetCard_margin_end">8dp</dimen>
+    <dimen name="widgetCard_margin_start">8dp</dimen>
+    <dimen name="widgetCard_margin_top">16dp</dimen>
+    <dimen name="widget_corner_radius">8dp</dimen>
+    <dimen name="widget_elevation">15dp</dimen>
+    <dimen name="recyclerview_margin_bottom">15dp</dimen>
+</resources>
