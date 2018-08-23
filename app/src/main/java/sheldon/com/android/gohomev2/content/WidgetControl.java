@@ -5,13 +5,15 @@ import android.graphics.Color;
 public class WidgetControl {
     private String label, value;
     private int cvColor, iconColor;
+    private String updateIndicator;
 //    private int toggleState;
 
 
-    public WidgetControl(String label, String color, String value) {
+    public WidgetControl(String label, String color, String value, String updateIndicator) {
         setColor(color);
         this.label = label;
         this.value = value;
+        this.updateIndicator = updateIndicator;
     }
 
     public void setLabel(String label) {
@@ -43,6 +45,8 @@ public class WidgetControl {
         this.value = value;
     }
 
+    public void setUpdateIndicator(String updateIndicator) { this.updateIndicator = updateIndicator;}
+
     public String getLabel() {
         return label;
     }
@@ -57,6 +61,10 @@ public class WidgetControl {
 
     public int iconColor() {
         return iconColor;
+    }
+
+    public String getUpdateIndicator() {
+        return updateIndicator;
     }
 
 //    public int getToggleState() {

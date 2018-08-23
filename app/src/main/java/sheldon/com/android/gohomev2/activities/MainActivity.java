@@ -1,5 +1,6 @@
 package sheldon.com.android.gohomev2.activities;
 
+import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -45,12 +46,16 @@ public class MainActivity extends AppCompatActivity
     private MenuItem prevMenuItem;
     private ViewPager viewPager;
     private BottomNavigationView bottomNavigation;
+    private NavigationView navigationView;
     private LoopJ client;
     private Handler mHandler;
     private TextView fullName, email, mArea, mLastUpdate, mLiveTime;
+    private static int navItemIndex = 0;
     public static int countUpdateDO = 0;
     public static int countUpdateDI = 0;
     public static int countUpdateAI = 0;
+    public static String starText = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +109,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         View navHeaderView = navigationView.getHeaderView(0);
@@ -227,9 +232,13 @@ public class MainActivity extends AppCompatActivity
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    navItemIndex = 0;
+                    selectNavMenu();
                     viewPager.setCurrentItem(0);
                     return true;
                 case R.id.navigation_dashboard:
+                    navItemIndex = 1;
+                    selectNavMenu();
                     viewPager.setCurrentItem(1);
                     return true;
             }
@@ -237,7 +246,11 @@ public class MainActivity extends AppCompatActivity
         }
     };
 
+    @SuppressLint("SetTextI18n")
     private void updateFragment() {
+        starText = starText + "*";
+
+        if (starText.length() >= 6) starText = "*";
 
         client.synchronize(LoopJ.token, LoopJ.uname);
         JSONObject response = LoopJ.syncResponse;
@@ -246,8 +259,13 @@ public class MainActivity extends AppCompatActivity
 
             try {
                 mArea.setText(response.getString("area"));
-                mLiveTime.setText(response.getString("livetime"));
-                mLastUpdate.setText(response.getString("lastupdate"));
+                mLiveTime.setText(response.getString("livetime") + starText);
+
+                String lastUpdate = response.getString("lastupdate");
+                if (!lastUpdate.equals("0"))
+                    mLastUpdate.setText(lastUpdate);
+                else mLastUpdate.setText("--");
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -309,5 +327,7 @@ public class MainActivity extends AppCompatActivity
         }
     };
 
-
+    private void selectNavMenu() {
+        navigationView.getMenu().getItem(navItemIndex).setChecked(true);
+    }
 }

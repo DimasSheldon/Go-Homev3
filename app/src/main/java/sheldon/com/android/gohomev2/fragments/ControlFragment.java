@@ -75,7 +75,7 @@ public class ControlFragment extends Fragment {
     }
 
     private static void initiateEmptyWidgets() {
-        widgetsDO.add(new WidgetControl("Control", "GRAY", "NA"));
+        widgetsDO.add(new WidgetControl("Control", "GRAY", "NA", MainActivity.starText));
     }
 
     public static void updateDataDO(JSONObject jsonObject) {
@@ -88,6 +88,7 @@ public class ControlFragment extends Fragment {
                 widgetsDO.get(positionDO).setLabel(jsonObject.getString("label"));
                 widgetsDO.get(positionDO).setColor(jsonObject.getString("color"));
                 widgetsDO.get(positionDO).setValue(jsonObject.getString("value"));
+                widgetsDO.get(positionDO).setUpdateIndicator(MainActivity.starText);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -96,7 +97,8 @@ public class ControlFragment extends Fragment {
                 Log.d("CONTROL_FRAGMENT", "ADD");
                 widgetsDO.add(positionDO, new WidgetControl(jsonObject.getString("label"),
                         jsonObject.getString("color"),
-                        jsonObject.getString("value")));
+                        jsonObject.getString("value"),
+                        MainActivity.starText));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

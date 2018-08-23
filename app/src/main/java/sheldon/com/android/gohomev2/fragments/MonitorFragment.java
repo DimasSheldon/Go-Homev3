@@ -83,6 +83,7 @@ public class MonitorFragment extends Fragment {
                 }
             }
         });
+
         mExpandButtonDI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,8 +101,8 @@ public class MonitorFragment extends Fragment {
     }
 
     private static void initiateEmptyWidgets() {
-        widgetsAI.add(new WidgetMonitor("PLAIN_LOGO", "Monitoring", "GRAY", "NA"));
-        widgetsDI.add(new WidgetMonitor("PLAIN_LOGO", "Monitoring", "GRAY", "NA"));
+        widgetsAI.add(new WidgetMonitor("PLAIN_LOGO", "Monitoring", "GRAY", "NA", MainActivity.starText));
+        widgetsDI.add(new WidgetMonitor("PLAIN_LOGO", "Monitoring", "GRAY", "NA", MainActivity.starText));
     }
 
     public static void updateDataAI(JSONObject jsonObject) {
@@ -115,6 +116,7 @@ public class MonitorFragment extends Fragment {
                 widgetsAI.get(positionAI).setLabel(jsonObject.getString("label"));
                 widgetsAI.get(positionAI).setColor(jsonObject.getString("color"));
                 widgetsAI.get(positionAI).setValue(jsonObject.getString("value"));
+                widgetsAI.get(positionAI).setUpdateIndicator(MainActivity.starText);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -124,7 +126,8 @@ public class MonitorFragment extends Fragment {
                 widgetsAI.add(positionAI, new WidgetMonitor(jsonObject.getString("icon"),
                         jsonObject.getString("label"),
                         jsonObject.getString("color"),
-                        jsonObject.getString("value")));
+                        jsonObject.getString("value"),
+                        MainActivity.starText));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -145,6 +148,7 @@ public class MonitorFragment extends Fragment {
                 widgetsDI.get(positionDI).setLabel(jsonObject.getString("label"));
                 widgetsDI.get(positionDI).setColor(jsonObject.getString("color"));
                 widgetsDI.get(positionDI).setValue(jsonObject.getString("value"));
+                widgetsAI.get(positionDI).setUpdateIndicator(MainActivity.starText);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -154,7 +158,8 @@ public class MonitorFragment extends Fragment {
                 widgetsDI.add(positionDI, new WidgetMonitor(jsonObject.getString("icon"),
                         jsonObject.getString("label"),
                         jsonObject.getString("color"),
-                        jsonObject.getString("value")));
+                        jsonObject.getString("value"),
+                        MainActivity.starText));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

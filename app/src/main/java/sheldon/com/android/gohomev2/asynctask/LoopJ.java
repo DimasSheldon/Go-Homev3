@@ -93,8 +93,7 @@ public class LoopJ {
 //        Log.d("USERNAME", "synchronize: " + username);
 //        Log.d("TOKEN", "synchronize: " + token);
 
-//        LoopJRestClient.addHeader("username", username);
-        LoopJRestClient.addHeader("username", "dimas");
+        LoopJRestClient.addHeader("username", username);
         LoopJRestClient.addHeader("tokenid", token);
 
         LoopJRestClient.get(SYNC_URL, null, new JsonHttpResponseHandler() {

@@ -28,14 +28,16 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
                 android:background="@color/white">
 
                 <TextView
                     android:id="@+id/tv_area"
-                    android:layout_width="match_parent"
+                    android:layout_width="153dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
                     android:text="AREA"
                     android:textAlignment="center"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Title.Inverse" />
@@ -44,9 +46,7 @@
                     android:id="@+id/tv_last_update"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_area"
-                    android:layout_marginBottom="6dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/tv_area"
                     android:text="Last Update: "
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium.Inverse" />
 
@@ -54,9 +54,10 @@
                     android:id="@+id/tv_last_update_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/iron"
                     android:layout_alignBottom="@+id/tv_last_update"
+                    android:layout_toEndOf="@+id/tv_last_update"
                     android:layout_toRightOf="@+id/tv_last_update"
+
                     android:text="null"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium.Inverse" />
 
@@ -64,10 +65,9 @@
                     android:id="@+id/tv_live_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_area"
-                    android:layout_toRightOf="@+id/tv_last_update_value"
-                    android:layout_marginBottom="6dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_below="@+id/tv_last_update"
+                    android:layout_toEndOf="@+id/tv_area"
+                    android:layout_toRightOf="@+id/tv_area"
                     android:text="Live Time: "
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium.Inverse" />
 
@@ -75,7 +75,6 @@
                     android:id="@+id/tv_live_time_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/iron"
                     android:layout_alignBottom="@+id/tv_live_time"
                     android:layout_toRightOf="@+id/tv_live_time"
                     android:text="0 minutes ago"
@@ -84,7 +83,6 @@
 
         </android.support.design.widget.AppBarLayout>
 
-
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
@@ -92,9 +90,9 @@
             android:layout_gravity="bottom"
             android:layout_marginEnd="0dp"
             android:layout_marginStart="0dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:background="?android:attr/windowBackground"
-            app:menu="@menu/navigation" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:menu="@menu/navigation_bottom" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/viewpager"
@@ -103,6 +101,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     </android.support.design.widget.CoordinatorLayout>
+
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"

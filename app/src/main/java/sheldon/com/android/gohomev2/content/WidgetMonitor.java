@@ -7,13 +7,15 @@ import sheldon.com.android.gohomev2.R;
 public class WidgetMonitor {
     private String label, value;
     private int icon, cvColor, iconColor;
+    private String updateIndicator;
 
     //WidgetMonitor("ion ion-waterdrop", "HUMIDITY", "bg-blue", "NA")
-    public WidgetMonitor(String icon, String label, String color, String value) {
+    public WidgetMonitor(String icon, String label, String color, String value, String updateIndicator) {
         setIcon(icon);
         setColor(color);
         this.label = label;
         this.value = value;
+        this.updateIndicator = updateIndicator;
     }
 
     public void setIcon(String icon) {
@@ -65,6 +67,8 @@ public class WidgetMonitor {
         this.value = value;
     }
 
+    public void setUpdateIndicator(String updateIndicator) { this.updateIndicator = updateIndicator;}
+
     public String getLabel() {
         return label;
     }
@@ -83,5 +87,9 @@ public class WidgetMonitor {
 
     public int iconColor() {
         return iconColor;
+    }
+
+    public String getUpdateIndicator() {
+        return updateIndicator;
     }
 }

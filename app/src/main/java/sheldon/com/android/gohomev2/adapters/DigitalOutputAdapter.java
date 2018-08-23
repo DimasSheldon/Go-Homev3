@@ -22,6 +22,7 @@ public class DigitalOutputAdapter extends RecyclerView.Adapter<DigitalOutputAdap
         CardView cv;
         TextView widgetLabel;
         TextView widgetValue;
+        TextView widgetUpdateIndicator;
         Switch widgetToggle;
         View view;
 
@@ -30,7 +31,9 @@ public class DigitalOutputAdapter extends RecyclerView.Adapter<DigitalOutputAdap
             cv = (CardView) itemView.findViewById(R.id.cv_control);
             widgetLabel = (TextView) itemView.findViewById(R.id.widget_label_control);
             widgetValue = (TextView) itemView.findViewById(R.id.widget_value_control);
+            widgetUpdateIndicator = (TextView) itemView.findViewById(R.id.widget_update_indicator_control);
             widgetToggle = (Switch) itemView.findViewById(R.id.widget_toggle_control);
+
 
             view = itemView;
             view.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +77,8 @@ public class DigitalOutputAdapter extends RecyclerView.Adapter<DigitalOutputAdap
 //        widgetViewHolder.widgetToggle.setBackgroundColor(widgets.get(position).iconColor());
         // Value
         widgetViewHolder.widgetValue.setText(widgets.get(position).getValue());
+        // Update Indicator
+        widgetViewHolder.widgetUpdateIndicator.setText(widgets.get(position).getUpdateIndicator());
 
         if (widgets.get(position).getValue().equals("ON"))
             widgetViewHolder.widgetToggle.setChecked(true);

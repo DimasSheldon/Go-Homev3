@@ -24,6 +24,7 @@ public class AnalogInputAdapter extends RecyclerView.Adapter<AnalogInputAdapter.
         CardView cv;
         TextView widgetLabel;
         TextView widgetValue;
+        TextView widgetUpdateIndicator;
         ImageView widgetIcon;
         View view;
 
@@ -34,6 +35,7 @@ public class AnalogInputAdapter extends RecyclerView.Adapter<AnalogInputAdapter.
             widgetIcon = (ImageView) itemView.findViewById(R.id.widget_icon_monitor);
             widgetLabel = (TextView) itemView.findViewById(R.id.widget_label_monitor);
             widgetValue = (TextView) itemView.findViewById(R.id.widget_value_monitor);
+            widgetUpdateIndicator = (TextView) itemView.findViewById(R.id.widget_update_indicator_monitor);
 
             view = itemView;
             view.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +78,8 @@ public class AnalogInputAdapter extends RecyclerView.Adapter<AnalogInputAdapter.
         widgetViewHolder.widgetIcon.setBackgroundColor(widgets.get(position).iconColor());
         // Value
         widgetViewHolder.widgetValue.setText(widgets.get(position).getValue());
+        // Update Indicator
+        widgetViewHolder.widgetUpdateIndicator.setText(widgets.get(position).getUpdateIndicator());
     }
 
     @Override
