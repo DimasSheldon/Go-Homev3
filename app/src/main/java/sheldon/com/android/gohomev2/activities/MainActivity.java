@@ -1,6 +1,7 @@
 package sheldon.com.android.gohomev2.activities;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -43,6 +44,7 @@ import sheldon.com.android.gohomev2.helper.BottomNavigationViewBehavior;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, LoopJListener {
     private Toolbar toolbar;
+    public static Context context;
     private MenuItem prevMenuItem;
     private ViewPager viewPager;
     private BottomNavigationView bottomNavigation;
@@ -61,6 +63,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        context = this;
 
         client = new LoopJ(this);
         mHandler = new Handler();
@@ -259,7 +262,7 @@ public class MainActivity extends AppCompatActivity
 
             try {
                 mArea.setText(response.getString("area"));
-                mLiveTime.setText(response.getString("livetime") + starText);
+                mLiveTime.setText(response.getString("livetime"));
 
                 String lastUpdate = response.getString("lastupdate");
                 if (!lastUpdate.equals("0"))

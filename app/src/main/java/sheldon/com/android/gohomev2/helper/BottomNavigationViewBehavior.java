@@ -20,8 +20,7 @@ public class BottomNavigationViewBehavior extends CoordinatorLayout.Behavior<Bot
     public boolean onStartNestedScroll(@NonNull CoordinatorLayout coordinatorLayout,
                                        BottomNavigationView child, @NonNull
                                                View directTargetChild, @NonNull View target,
-                                       int axes, int type)
-    {
+                                       int axes, int type) {
         return axes == ViewCompat.SCROLL_AXIS_VERTICAL;
     }
 
@@ -29,8 +28,7 @@ public class BottomNavigationViewBehavior extends CoordinatorLayout.Behavior<Bot
     public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull BottomNavigationView child,
                                @NonNull View target, int dxConsumed, int dyConsumed,
                                int dxUnconsumed, int dyUnconsumed,
-                               @ViewCompat.NestedScrollType int type)
-    {
+                               @ViewCompat.NestedScrollType int type) {
         if (dyConsumed > 0) {
             slideDown(child);
         } else if (dyConsumed < 0) {

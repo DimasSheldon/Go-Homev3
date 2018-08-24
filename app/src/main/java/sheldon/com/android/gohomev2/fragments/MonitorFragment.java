@@ -101,8 +101,8 @@ public class MonitorFragment extends Fragment {
     }
 
     private static void initiateEmptyWidgets() {
-        widgetsAI.add(new WidgetMonitor("PLAIN_LOGO", "Monitoring", "GRAY", "NA", MainActivity.starText));
-        widgetsDI.add(new WidgetMonitor("PLAIN_LOGO", "Monitoring", "GRAY", "NA", MainActivity.starText));
+        widgetsAI.add(new WidgetMonitor("default", "Monitoring", "bg-gray", "NA", MainActivity.starText));
+        widgetsDI.add(new WidgetMonitor("default", "Monitoring", "bg-gray", "NA", MainActivity.starText));
     }
 
     public static void updateDataAI(JSONObject jsonObject) {
@@ -143,9 +143,11 @@ public class MonitorFragment extends Fragment {
 
         if (!(positionDI >= widgetsDI.size())) {
             Log.d("MONITOR_FRAGMENT", "UPDATE");
+
             try {
                 widgetsDI.get(positionDI).setIcon(jsonObject.getString("icon"));
                 widgetsDI.get(positionDI).setLabel(jsonObject.getString("label"));
+                Log.d("MONITOR_FRAGMENT", "UPDATE" + jsonObject.getString("color"));
                 widgetsDI.get(positionDI).setColor(jsonObject.getString("color"));
                 widgetsDI.get(positionDI).setValue(jsonObject.getString("value"));
                 widgetsAI.get(positionDI).setUpdateIndicator(MainActivity.starText);

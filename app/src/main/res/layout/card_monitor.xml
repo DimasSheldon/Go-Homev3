@@ -4,10 +4,10 @@
     android:id="@+id/cv_monitor"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/widgetCard_margin_bottom"
     android:layout_marginEnd="@dimen/widgetCard_margin_end"
     android:layout_marginStart="@dimen/widgetCard_margin_start"
     android:layout_marginTop="@dimen/widgetCard_margin_top"
-    android:layout_marginBottom="@dimen/widgetCard_margin_bottom"
     android:clickable="true"
     android:focusable="true"
     android:foreground="?android:attr/selectableItemBackground"
@@ -18,13 +18,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/widget_icon_monitor"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+        <RelativeLayout
+            android:id="@+id/container_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginRight="16dp" />
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp">
+
+            <ImageView
+                android:id="@+id/widget_icon_monitor"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_centerInParent="true"
+                android:foregroundGravity="center"/>
+        </RelativeLayout>
+
 
         <TextView
             android:id="@+id/widget_label_monitor"
@@ -32,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginTop="10dp"
-            android:layout_toRightOf="@+id/widget_icon_monitor"
+            android:layout_toRightOf="@+id/container_icon"
             android:textColor="@color/white"
             android:textSize="20sp" />
 
@@ -42,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/widget_label_monitor"
             android:layout_marginTop="10dp"
-            android:layout_toRightOf="@+id/widget_icon_monitor"
+            android:layout_toRightOf="@+id/container_icon"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -53,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/widget_value_monitor"
             android:layout_marginTop="10dp"
-            android:layout_toRightOf="@+id/widget_icon_monitor"
+            android:layout_toRightOf="@+id/container_icon"
             android:text="*****"
             android:textColor="@color/white"
             android:textSize="15sp" />

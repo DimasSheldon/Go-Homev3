@@ -75,7 +75,7 @@ public class ControlFragment extends Fragment {
     }
 
     private static void initiateEmptyWidgets() {
-        widgetsDO.add(new WidgetControl("Control", "GRAY", "NA", MainActivity.starText));
+        widgetsDO.add(new WidgetControl("Control", "bg-gray", "NA", MainActivity.starText));
     }
 
     public static void updateDataDO(JSONObject jsonObject) {
