@@ -2,6 +2,7 @@ package sheldon.com.android.gohomev2.adapters;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ public class DigitalOutputAdapter extends RecyclerView.Adapter<DigitalOutputAdap
         TextView widgetLabel;
         TextView widgetValue;
         TextView widgetUpdateIndicator;
+        View switchContainer;
         Switch widgetToggle;
         View view;
 
@@ -33,6 +35,7 @@ public class DigitalOutputAdapter extends RecyclerView.Adapter<DigitalOutputAdap
             widgetValue = (TextView) itemView.findViewById(R.id.widget_value_control);
             widgetUpdateIndicator = (TextView) itemView.findViewById(R.id.widget_update_indicator_control);
             widgetToggle = (Switch) itemView.findViewById(R.id.widget_toggle_control);
+            switchContainer = (View) itemView.findViewById(R.id.container_switch);
 
 
             view = itemView;
@@ -74,7 +77,7 @@ public class DigitalOutputAdapter extends RecyclerView.Adapter<DigitalOutputAdap
         widgetViewHolder.widgetLabel.setText(widgets.get(position).getLabel());
         // Color
         widgetViewHolder.cv.setCardBackgroundColor(widgets.get(position).cvColor());
-//        widgetViewHolder.widgetToggle.setBackgroundColor(widgets.get(position).iconColor());
+        widgetViewHolder.switchContainer.setBackgroundColor(widgets.get(position).iconColor());
         // Value
         widgetViewHolder.widgetValue.setText(widgets.get(position).getValue());
         // Update Indicator

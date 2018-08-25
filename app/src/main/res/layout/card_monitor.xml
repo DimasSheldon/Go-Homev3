@@ -33,7 +33,7 @@
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_centerInParent="true"
-                android:foregroundGravity="center"/>
+                android:foregroundGravity="center" />
         </RelativeLayout>
 
 
@@ -43,6 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/container_icon"
             android:layout_toRightOf="@+id/container_icon"
             android:textColor="@color/white"
             android:textSize="20sp" />
@@ -53,6 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/widget_label_monitor"
             android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/container_icon"
             android:layout_toRightOf="@+id/container_icon"
             android:textColor="@color/white"
             android:textSize="20sp"
@@ -64,8 +66,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/widget_value_monitor"
             android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/container_icon"
             android:layout_toRightOf="@+id/container_icon"
-            android:text="*****"
+            android:text="@string/value_update_indicator_monitor"
             android:textColor="@color/white"
             android:textSize="15sp" />
 

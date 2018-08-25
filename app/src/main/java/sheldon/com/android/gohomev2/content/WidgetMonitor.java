@@ -23,8 +23,8 @@ public class WidgetMonitor {
     }
 
     public void setColor(String responseColor) {
-        this.cvColor = ColorPicker.pickColor(responseColor);
-        this.iconColor = ColorPicker.pickColorIcon(responseColor);
+        this.cvColor = ColorPicker.pickColorLight(responseColor);
+        this.iconColor = ColorPicker.pickColorDark(responseColor);
     }
 
     public void setLabel(String label) {

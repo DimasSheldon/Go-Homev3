@@ -2,7 +2,6 @@
     <string name="app_name">Go-Home NEW</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="takephoto">Take Photo</string>
     <string name="gallery">Gallery</string>
     <string name="slideshow">Slideshow</string>
@@ -19,4 +18,17 @@
     <string name="title_home">Monitor</string>
     <string name="title_dashboard">Control</string>
     <string name="title_notifications">Notifications</string>
+    <string name="title_area">AREA</string>
+    <string name="title_last_update">Last Update:</string>
+    <string name="value_last_update">null</string>
+    <string name="title_live_time">Live Time:</string>
+    <string name="value_live_time">0 minutes ago</string>
+    <string name="button_login_text">Login</string>
+    <string name="edittext_password">Password</string>
+    <string name="edittext_username">Username</string>
+    <string name="value_update_indicator_control">*****</string>
+    <string name="value_update_indicator_monitor">*****</string>
+    <string name="title_tv_digital_output">Digital Output</string>
+    <string name="title_tv_analog_input">Analog Input</string>
+    <string name="title_tv_digital_input">Digital Input</string>
 </resources>

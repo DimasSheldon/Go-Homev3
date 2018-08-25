@@ -19,12 +19,13 @@ import sheldon.com.android.gohomev2.R;
 import sheldon.com.android.gohomev2.activities.MainActivity;
 import sheldon.com.android.gohomev2.adapters.DigitalOutputAdapter;
 import sheldon.com.android.gohomev2.content.WidgetControl;
+import sheldon.com.android.gohomev2.helper.ExpandableButton;
 
 public class ControlFragment extends Fragment {
 
+    private ImageButton mExpandButtonDO;
+    private RecyclerView mRecyclerViewDO;
     private static DigitalOutputAdapter digitalOutputAdapter;
-    private static RecyclerView mRecyclerViewDO;
-    private static ImageButton mExpandButtonDO;
     private static int positionDO = 0;
 
     private static ArrayList<WidgetControl> widgetsDO;
@@ -45,32 +46,20 @@ public class ControlFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_control, container, false);
 
-
         mRecyclerViewDO = (RecyclerView) rootView.findViewById(R.id.rv_control);
-        mRecyclerViewDO.setHasFixedSize(true);
+        mExpandButtonDO = (ImageButton) rootView.findViewById(R.id.expand_button_do);
 
-        //empty widgetsDO
         initiateEmptyWidgets();
 
         digitalOutputAdapter = new DigitalOutputAdapter(widgetsDO);
-        mRecyclerViewDO.setAdapter(digitalOutputAdapter);
-
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+
+        mRecyclerViewDO.setHasFixedSize(true);
+        mRecyclerViewDO.setAdapter(digitalOutputAdapter);
         mRecyclerViewDO.setLayoutManager(llm);
 
-        mExpandButtonDO = (ImageButton) rootView.findViewById(R.id.expand_button_do);
-        mExpandButtonDO.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mRecyclerViewDO.getVisibility() == View.VISIBLE) {
-                    mExpandButtonDO.setImageResource(R.drawable.ic_expand_more_white_36dp);
-                    mRecyclerViewDO.setVisibility(View.GONE);
-                } else {
-                    mExpandButtonDO.setImageResource(R.drawable.ic_expand_less_white_36dp);
-                    mRecyclerViewDO.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+        ExpandableButton.giveActionOnClick(mExpandButtonDO, mRecyclerViewDO);
+
         return rootView;
     }
 
@@ -79,23 +68,28 @@ public class ControlFragment extends Fragment {
     }
 
     public static void updateDataDO(JSONObject jsonObject) {
-        Log.d("POSITION_CONTROL", "updateDataAI: " + positionDO);
-        Log.d("WIDGET_SIZE", "updateDataAI: " + widgetsDO.size());
+        update(widgetsDO, positionDO, jsonObject);
 
-        if (!(positionDO >= widgetsDO.size())) {
+        digitalOutputAdapter.notifyDataSetChanged();
+
+        positionDO++;
+    }
+
+    private static void update(ArrayList<WidgetControl> widgets, int position, JSONObject jsonObject) {
+        if (!(position >= widgets.size())) {
             Log.d("CONTROL_FRAGMENT", "UPDATE");
             try {
-                widgetsDO.get(positionDO).setLabel(jsonObject.getString("label"));
-                widgetsDO.get(positionDO).setColor(jsonObject.getString("color"));
-                widgetsDO.get(positionDO).setValue(jsonObject.getString("value"));
-                widgetsDO.get(positionDO).setUpdateIndicator(MainActivity.starText);
+                widgets.get(position).setLabel(jsonObject.getString("label"));
+                widgets.get(position).setColor(jsonObject.getString("color"));
+                widgets.get(position).setValue(jsonObject.getString("value"));
+                widgets.get(position).setUpdateIndicator(MainActivity.starText);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         } else {
             try {
                 Log.d("CONTROL_FRAGMENT", "ADD");
-                widgetsDO.add(positionDO, new WidgetControl(jsonObject.getString("label"),
+                widgets.add(position, new WidgetControl(jsonObject.getString("label"),
                         jsonObject.getString("color"),
                         jsonObject.getString("value"),
                         MainActivity.starText));
@@ -103,10 +97,6 @@ public class ControlFragment extends Fragment {
                 e.printStackTrace();
             }
         }
-
-        digitalOutputAdapter.notifyDataSetChanged();
-
-        positionDO++;
     }
 
     public static void resetPosition() {

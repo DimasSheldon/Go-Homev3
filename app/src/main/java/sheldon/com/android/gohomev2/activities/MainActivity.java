@@ -39,6 +39,7 @@ import sheldon.com.android.gohomev2.asynctask.LoopJ;
 import sheldon.com.android.gohomev2.asynctask.LoopJListener;
 import sheldon.com.android.gohomev2.fragments.ControlFragment;
 import sheldon.com.android.gohomev2.fragments.MonitorFragment;
+import sheldon.com.android.gohomev2.helper.BottomNavigationBehavior;
 import sheldon.com.android.gohomev2.helper.BottomNavigationViewBehavior;
 
 public class MainActivity extends AppCompatActivity
@@ -86,7 +87,7 @@ public class MainActivity extends AppCompatActivity
         bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) bottomNavigation.getLayoutParams();
-        layoutParams.setBehavior(new BottomNavigationViewBehavior());
+        layoutParams.setBehavior(new BottomNavigationBehavior());
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -263,11 +264,7 @@ public class MainActivity extends AppCompatActivity
             try {
                 mArea.setText(response.getString("area"));
                 mLiveTime.setText(response.getString("livetime"));
-
-                String lastUpdate = response.getString("lastupdate");
-                if (!lastUpdate.equals("0"))
-                    mLastUpdate.setText(lastUpdate);
-                else mLastUpdate.setText("--");
+                mLastUpdate.setText(response.getString("lastupdate"));
 
             } catch (JSONException e) {
                 e.printStackTrace();

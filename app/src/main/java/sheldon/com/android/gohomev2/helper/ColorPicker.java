@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ColorPicker {
-    public static String color;
+    private static String color;
     private static Map<String, String> colorLightMap = new HashMap<String, String>() {
         {
             // aqua
@@ -37,6 +37,7 @@ public class ColorPicker {
             put("yellow", "#ffff00");
         }
     };
+
     private static Map<String, String> colorDarkMap = new HashMap<String, String>() {
         {
             // aqua
@@ -58,7 +59,7 @@ public class ColorPicker {
             // purple
             put("darkpurple", "#4f0053");
             // red
-            put("darkred", "#8b0000");
+            put("darkred", "#c20000");
             // teal
             put("darkteal", "#005354");
             // white
@@ -68,16 +69,13 @@ public class ColorPicker {
         }
     };
 
-    public ColorPicker() {
-    }
-
-    public static int pickColor(String responseColor) {
+    public static int pickColorLight(String responseColor) {
         color = responseColor.split("-")[1];
 
         return Color.parseColor(colorLightMap.get(color));
     }
 
-    public static int pickColorIcon(String responseColor) {
+    public static int pickColorDark(String responseColor) {
         color = responseColor.split("-")[1];
 
         return Color.parseColor(colorDarkMap.get("dark" + color));

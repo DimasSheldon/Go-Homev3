@@ -38,16 +38,18 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:text="AREA"
+                    android:text="@string/title_area"
                     android:textAlignment="center"
+                    android:textAllCaps="true"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Title.Inverse" />
 
                 <TextView
                     android:id="@+id/tv_last_update"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/tv_area"
                     android:layout_toRightOf="@+id/tv_area"
-                    android:text="Last Update: "
+                    android:text="@string/title_last_update"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium.Inverse" />
 
                 <TextView
@@ -57,8 +59,7 @@
                     android:layout_alignBottom="@+id/tv_last_update"
                     android:layout_toEndOf="@+id/tv_last_update"
                     android:layout_toRightOf="@+id/tv_last_update"
-
-                    android:text="null"
+                    android:text="@string/value_last_update"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium.Inverse" />
 
                 <TextView
@@ -68,7 +69,7 @@
                     android:layout_below="@+id/tv_last_update"
                     android:layout_toEndOf="@+id/tv_area"
                     android:layout_toRightOf="@+id/tv_area"
-                    android:text="Live Time: "
+                    android:text="@string/title_live_time"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium.Inverse" />
 
                 <TextView
@@ -77,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@+id/tv_live_time"
                     android:layout_toRightOf="@+id/tv_live_time"
-                    android:text="0 minutes ago"
+                    android:text="@string/value_live_time"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium.Inverse" />
             </RelativeLayout>
 

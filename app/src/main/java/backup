@@ -563,3 +563,5 @@ private static Map<String, String> colorMap = new HashMap<String, String>() {
             put("yellowgreen", "#9acd32");
         }
     };
+
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"

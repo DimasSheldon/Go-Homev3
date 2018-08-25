@@ -33,7 +33,7 @@
                 android:id="@+id/input_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Username" />
+                android:hint="@string/edittext_username" />
         </android.support.design.widget.TextInputLayout>
 
         <!--  Password Label -->
@@ -47,7 +47,7 @@
                 android:id="@+id/input_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
+                android:hint="@string/edittext_password"
                 android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
 
@@ -60,7 +60,7 @@
             android:background="#00251a"
             android:onClick="login"
             android:padding="12dp"
-            android:text="Login"
+            android:text="@string/button_login_text"
             android:textColor="@color/white" />
 
         <TextView

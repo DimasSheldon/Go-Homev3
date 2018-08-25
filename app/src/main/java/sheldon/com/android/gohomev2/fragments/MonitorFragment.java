@@ -20,17 +20,17 @@ import sheldon.com.android.gohomev2.activities.MainActivity;
 import sheldon.com.android.gohomev2.adapters.DigitalInputAdapter;
 import sheldon.com.android.gohomev2.content.WidgetMonitor;
 import sheldon.com.android.gohomev2.adapters.AnalogInputAdapter;
+import sheldon.com.android.gohomev2.helper.ExpandableButton;
 
 public class MonitorFragment extends Fragment {
 
+    private ImageButton mExpandButtonAI, mExpandButtonDI;
+    private RecyclerView mRecyclerViewAI, mRecyclerViewDI;
+    private static ArrayList<WidgetMonitor> widgetsAI, widgetsDI;
     private static AnalogInputAdapter analogInputAdapter;
     private static DigitalInputAdapter digitalInputAdapter;
-    private static RecyclerView mRecyclerViewAI, mRecyclerViewDI;
-    private static ImageButton mExpandButtonAI, mExpandButtonDI;
     private static int positionAI = 0;
     private static int positionDI = 0;
-    private static ArrayList<WidgetMonitor> widgetsAI;
-    private static ArrayList<WidgetMonitor> widgetsDI;
 
     public MonitorFragment() {
     }
@@ -50,52 +50,26 @@ public class MonitorFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_monitor, container, false);
 
         mRecyclerViewAI = (RecyclerView) rootView.findViewById(R.id.rv_analog_input);
-        mRecyclerViewAI.setHasFixedSize(true);
-
         mRecyclerViewDI = (RecyclerView) rootView.findViewById(R.id.rv_digital_input);
-        mRecyclerViewDI.setHasFixedSize(true);
+        mExpandButtonAI = (ImageButton) rootView.findViewById(R.id.expand_button_ai);
+        mExpandButtonDI = (ImageButton) rootView.findViewById(R.id.expand_button_di);
 
-        //empty widgets
         initiateEmptyWidgets();
 
         analogInputAdapter = new AnalogInputAdapter(widgetsAI);
         digitalInputAdapter = new DigitalInputAdapter(widgetsDI);
-        mRecyclerViewAI.setAdapter(analogInputAdapter);
-        mRecyclerViewDI.setAdapter(digitalInputAdapter);
-
         LinearLayoutManager llmAI = new LinearLayoutManager(getActivity());
         LinearLayoutManager llmDI = new LinearLayoutManager(getActivity());
+
+        mRecyclerViewAI.setHasFixedSize(true);
+        mRecyclerViewDI.setHasFixedSize(true);
+        mRecyclerViewAI.setAdapter(analogInputAdapter);
+        mRecyclerViewDI.setAdapter(digitalInputAdapter);
         mRecyclerViewAI.setLayoutManager(llmAI);
         mRecyclerViewDI.setLayoutManager(llmDI);
 
-        mExpandButtonAI = (ImageButton) rootView.findViewById(R.id.expand_button_ai);
-        mExpandButtonDI = (ImageButton) rootView.findViewById(R.id.expand_button_di);
-
-        mExpandButtonAI.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mRecyclerViewAI.getVisibility() == View.VISIBLE) {
-                    mExpandButtonAI.setImageResource(R.drawable.ic_expand_more_white_36dp);
-                    mRecyclerViewAI.setVisibility(View.GONE);
-                } else {
-                    mExpandButtonAI.setImageResource(R.drawable.ic_expand_less_white_36dp);
-                    mRecyclerViewAI.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
-        mExpandButtonDI.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mRecyclerViewDI.getVisibility() == View.VISIBLE) {
-                    mExpandButtonDI.setImageResource(R.drawable.ic_expand_more_white_36dp);
-                    mRecyclerViewDI.setVisibility(View.GONE);
-                } else {
-                    mExpandButtonDI.setImageResource(R.drawable.ic_expand_less_white_36dp);
-                    mRecyclerViewDI.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+        ExpandableButton.giveActionOnClick(mExpandButtonAI, mRecyclerViewAI);
+        ExpandableButton.giveActionOnClick(mExpandButtonDI, mRecyclerViewDI);
 
         return rootView;
     }
@@ -106,58 +80,38 @@ public class MonitorFragment extends Fragment {
     }
 
     public static void updateDataAI(JSONObject jsonObject) {
-        Log.d("POSITION_MONITOR", "updateDataAI: " + positionAI);
-        Log.d("WIDGET_SIZE", "updateDataAI: " + widgetsAI.size());
+        update(widgetsAI, positionAI, jsonObject);
 
-        if (!(positionAI >= widgetsAI.size())) {
-            Log.d("MONITOR_FRAGMENT", "UPDATE");
-            try {
-                widgetsAI.get(positionAI).setIcon(jsonObject.getString("icon"));
-                widgetsAI.get(positionAI).setLabel(jsonObject.getString("label"));
-                widgetsAI.get(positionAI).setColor(jsonObject.getString("color"));
-                widgetsAI.get(positionAI).setValue(jsonObject.getString("value"));
-                widgetsAI.get(positionAI).setUpdateIndicator(MainActivity.starText);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-                Log.d("MONITOR_FRAGMENT", "ADD");
-                widgetsAI.add(positionAI, new WidgetMonitor(jsonObject.getString("icon"),
-                        jsonObject.getString("label"),
-                        jsonObject.getString("color"),
-                        jsonObject.getString("value"),
-                        MainActivity.starText));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
         analogInputAdapter.notifyDataSetChanged();
 
         positionAI++;
     }
 
     public static void updateDataDI(JSONObject jsonObject) {
-        Log.d("POSITION_MONITOR", "updateDataDI: " + positionDI);
-        Log.d("WIDGET_SIZE", "updateDataDI: " + widgetsDI.size());
+        update(widgetsDI, positionDI, jsonObject);
 
-        if (!(positionDI >= widgetsDI.size())) {
-            Log.d("MONITOR_FRAGMENT", "UPDATE");
+        digitalInputAdapter.notifyDataSetChanged();
+
+        positionDI++;
+    }
+
+    private static void update(ArrayList<WidgetMonitor> widgets, int position, JSONObject jsonObject) {
+        if (!(position >= widgets.size())) {
+            Log.d("MONITOR_FRAGMENT", "UPDATING WIDGETS");
 
             try {
-                widgetsDI.get(positionDI).setIcon(jsonObject.getString("icon"));
-                widgetsDI.get(positionDI).setLabel(jsonObject.getString("label"));
-                Log.d("MONITOR_FRAGMENT", "UPDATE" + jsonObject.getString("color"));
-                widgetsDI.get(positionDI).setColor(jsonObject.getString("color"));
-                widgetsDI.get(positionDI).setValue(jsonObject.getString("value"));
-                widgetsAI.get(positionDI).setUpdateIndicator(MainActivity.starText);
+                widgets.get(position).setIcon(jsonObject.getString("icon"));
+                widgets.get(position).setLabel(jsonObject.getString("label"));
+                widgets.get(position).setColor(jsonObject.getString("color"));
+                widgets.get(position).setValue(jsonObject.getString("value"));
+                widgets.get(position).setUpdateIndicator(MainActivity.starText);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         } else {
             try {
-                Log.d("MONITOR_FRAGMENT", "ADD");
-                widgetsDI.add(positionDI, new WidgetMonitor(jsonObject.getString("icon"),
+                Log.d("MONITOR_FRAGMENT", "ADDED NEW ELEMENTS");
+                widgets.add(position, new WidgetMonitor(jsonObject.getString("icon"),
                         jsonObject.getString("label"),
                         jsonObject.getString("color"),
                         jsonObject.getString("value"),
@@ -166,9 +120,6 @@ public class MonitorFragment extends Fragment {
                 e.printStackTrace();
             }
         }
-        digitalInputAdapter.notifyDataSetChanged();
-
-        positionDI++;
     }
 
     public static void resetPosition() {
