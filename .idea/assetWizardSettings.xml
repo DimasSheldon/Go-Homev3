@@ -29,25 +29,15 @@
                             <entry key="launcher">
                               <value>
                                 <PersistentState>
-                                  <option name="values">
-                                    <map>
-                                      <entry key="foregroundImage" value="D:\Google Drive\Dimas Sheldon\ITHB\Semester 6\Internship\PT Aerocomm\icons\door.png" />
-                                    </map>
-                                  </option>
-                                </PersistentState>
-                              </value>
-                            </entry>
-                            <entry key="launcherLegacy">
-                              <value>
-                                <PersistentState>
                                   <option name="children">
                                     <map>
-                                      <entry key="image">
+                                      <entry key="foregroundImage">
                                         <value>
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="paddingPercent" value="30" />
+                                                <entry key="scalingPercent" value="90" />
+                                                <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -57,10 +47,25 @@
                                   </option>
                                   <option name="values">
                                     <map>
+                                      <entry key="backgroundAssetType" value="COLOR" />
+                                      <entry key="backgroundLayerName" value="ic_launcher_background_default" />
+                                      <entry key="foregroundImage" value="D:\Google Drive\Dimas Sheldon\ITHB\Semester 6\Internship\PT Aerocomm\icons\logoaerocommwhite.png" />
+                                      <entry key="foregroundLayerName" value="ic_launcher_foreground_default" />
+                                      <entry key="outputName" value="ic_launcher_default" />
+                                    </map>
+                                  </option>
+                                </PersistentState>
+                              </value>
+                            </entry>
+                            <entry key="launcherLegacy">
+                              <value>
+                                <PersistentState>
+                                  <option name="values">
+                                    <map>
                                       <entry key="assetType" value="IMAGE" />
                                       <entry key="iconShape" value="NONE" />
-                                      <entry key="imageAsset" value="D:\Google Drive\Dimas Sheldon\ITHB\Semester 6\Internship\PT Aerocomm\icons\waterdropWhite.png" />
-                                      <entry key="outputName" value="ic_widget_waterdrop_white" />
+                                      <entry key="imageAsset" value="D:\Google Drive\Dimas Sheldon\ITHB\Semester 6\Internship\PT Aerocomm\icons\logoaerocomm.png" />
+                                      <entry key="outputName" value="ic_launcher_icon" />
                                     </map>
                                   </option>
                                 </PersistentState>

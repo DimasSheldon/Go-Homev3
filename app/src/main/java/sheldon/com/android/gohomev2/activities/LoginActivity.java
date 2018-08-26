@@ -1,14 +1,15 @@
 package sheldon.com.android.gohomev2.activities;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import org.json.JSONException;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -19,12 +20,16 @@ import sheldon.com.android.gohomev2.R;
 import sheldon.com.android.gohomev2.asynctask.LoopJListener;
 
 public class LoginActivity extends AppCompatActivity implements LoopJListener {
+    public static final String PREFS_NAME = "LoginPrefs";
 
     private EditText mUsername, mPassword;
     private String username, password;
     private Button mButtonLogin;
     private LoopJ client;
+    private SharedPreferences sharedPref;
+    private boolean logStat;
 
+    @SuppressLint("CommitPrefEdits")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +41,19 @@ public class LoginActivity extends AppCompatActivity implements LoopJListener {
         mButtonLogin = (Button) findViewById(R.id.btn_login);
 
         client = new LoopJ(this, this);
+
+        sharedPref = getSharedPreferences(PREFS_NAME, 0);
+        logStat = sharedPref.getBoolean(getString(R.string.saved_log_stat), false);
+
+        Log.d("LOG_STAT", "onCreate: LoginActvt " + logStat);
+        if (logStat) {
+            goToMainActivity();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     @Override
@@ -43,9 +61,15 @@ public class LoginActivity extends AppCompatActivity implements LoopJListener {
         if (LoopJ.auth.equals("SUCCESS")) {
             Toast.makeText(LoginActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
+            //make SharedPreferences object
+            sharedPref.edit().putBoolean(getString(R.string.saved_log_stat), true).apply();
+            sharedPref.edit().putString(getString(R.string.saved_user_name), LoopJ.uname).apply();
+            sharedPref.edit().putString(getString(R.string.saved_full_name), LoopJ.fullName).apply();
+            sharedPref.edit().putString(getString(R.string.saved_email), LoopJ.email).apply();
+            sharedPref.edit().putString(getString(R.string.saved_role), LoopJ.role).apply();
+            sharedPref.edit().putString(getString(R.string.saved_token), LoopJ.token).apply();
 
+            goToMainActivity();
             onLoginSuccess();
         } else {
             Toast.makeText(LoginActivity.this, LoopJ.auth, Toast.LENGTH_SHORT).show();
@@ -108,5 +132,10 @@ public class LoginActivity extends AppCompatActivity implements LoopJListener {
             e1.printStackTrace();
         }
         return password;
+    }
+
+    private void goToMainActivity() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 }

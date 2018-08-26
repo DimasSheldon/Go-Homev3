@@ -68,7 +68,7 @@
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/container_icon"
             android:layout_toRightOf="@+id/container_icon"
-            android:text="@string/value_update_indicator_monitor"
+            android:text="@string/value_update_indicator"
             android:textColor="@color/white"
             android:textSize="15sp" />
 

@@ -1,5 +1,6 @@
 package sheldon.com.android.gohomev2.helper;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
 import java.util.HashMap;
@@ -8,7 +9,8 @@ import java.util.Map;
 import sheldon.com.android.gohomev2.activities.MainActivity;
 
 public class IconPicker {
-    private static final Context context = MainActivity.context;
+    @SuppressLint("StaticFieldLeak")
+    private static Context context = MainActivity.getActivityContext();
 
     private static Map<String, String> iconsLight = new HashMap<String, String>() {
         {

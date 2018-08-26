@@ -1,9 +1,13 @@
 package sheldon.com.android.gohomev2.activities;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.os.Handler;
 import android.support.annotation.NonNull;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Handler;
+
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
@@ -13,7 +17,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -28,7 +31,6 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -40,68 +42,74 @@ import sheldon.com.android.gohomev2.asynctask.LoopJListener;
 import sheldon.com.android.gohomev2.fragments.ControlFragment;
 import sheldon.com.android.gohomev2.fragments.MonitorFragment;
 import sheldon.com.android.gohomev2.helper.BottomNavigationBehavior;
-import sheldon.com.android.gohomev2.helper.BottomNavigationViewBehavior;
+
+import static sheldon.com.android.gohomev2.activities.LoginActivity.PREFS_NAME;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, LoopJListener {
+    private DrawerLayout drawer;
     private Toolbar toolbar;
-    public static Context context;
-    private MenuItem prevMenuItem;
     private ViewPager viewPager;
     private BottomNavigationView bottomNavigation;
     private NavigationView navigationView;
+    private MenuItem prevMenuItem;
     private LoopJ client;
     private Handler mHandler;
-    private TextView fullName, email, mArea, mLastUpdate, mLiveTime;
+    private TextView mFullName, mEmail, mArea, mLastUpdate, mLiveTime;
     private static int navItemIndex = 0;
     public static int countUpdateDO = 0;
     public static int countUpdateDI = 0;
     public static int countUpdateAI = 0;
     public static String starText = "";
+    private SharedPreferences sharedPref;
+    private String username, fullname, email, role, token;
 
+    @SuppressLint("StaticFieldLeak")
+    private static Context context;
 
+    @SuppressLint("CommitPrefEdits")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        context = this;
+        context = getApplicationContext();
+
+        sharedPref = getSharedPreferences(PREFS_NAME, 0);
+        username = sharedPref.getString(getString(R.string.saved_user_name), "");
+        fullname = sharedPref.getString(getString(R.string.saved_full_name), "");
+        email = sharedPref.getString(getString(R.string.saved_email), "");
+        role = sharedPref.getString(getString(R.string.saved_role), "");
+        token = sharedPref.getString(getString(R.string.saved_token), "");
 
         client = new LoopJ(this);
         mHandler = new Handler();
 
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
-
-        bottomNavigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-        bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) bottomNavigation.getLayoutParams();
-        layoutParams.setBehavior(new BottomNavigationBehavior());
-
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+                navItemIndex = position;
+                selectNavMenu();
             }
 
             @Override
             public void onPageSelected(int position) {
-                if (prevMenuItem != null) {
-                    prevMenuItem.setChecked(false);
-                } else {
-                    bottomNavigation.getMenu().getItem(0).setChecked(false);
-                }
+                if (prevMenuItem != null) prevMenuItem.setChecked(false);
+                else bottomNavigation.getMenu().getItem(0).setChecked(false);
 
                 bottomNavigation.getMenu().getItem(position).setChecked(true);
                 prevMenuItem = bottomNavigation.getMenu().getItem(position);
@@ -113,19 +121,21 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
         View navHeaderView = navigationView.getHeaderView(0);
 
-        fullName = (TextView) navHeaderView.findViewById(R.id.nav_full_name);
-        email = (TextView) navHeaderView.findViewById(R.id.nav_email);
+        mFullName = (TextView) navHeaderView.findViewById(R.id.nav_full_name);
+        mEmail = (TextView) navHeaderView.findViewById(R.id.nav_email);
         mArea = (TextView) findViewById(R.id.tv_area);
         mLastUpdate = (TextView) findViewById(R.id.tv_last_update_value);
         mLiveTime = (TextView) findViewById(R.id.tv_live_time_value);
 
-        fullName.setText(LoopJ.fullName);
-        email.setText(LoopJ.email);
+        mFullName.setText(username);
+        mEmail.setText(email);
+
+        bottomNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) bottomNavigation.getLayoutParams();
+        layoutParams.setBehavior(new BottomNavigationBehavior());
     }
 
     @Override
@@ -164,7 +174,14 @@ public class MainActivity extends AppCompatActivity
                 viewPager.setCurrentItem(1);
                 break;
             case R.id.nav_logout:
-                Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Logging out", Toast.LENGTH_SHORT).show();
+
+                sharedPref.edit().putBoolean(getString(R.string.saved_log_stat), false).apply();
+
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                finish();
+
                 break;
         }
 
@@ -176,6 +193,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void authenticate(String authStatus) {
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     @Override
@@ -193,11 +215,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        if (drawer.isDrawerOpen(GravityCompat.START)) drawer.closeDrawer(GravityCompat.START);
+        else moveTaskToBack(true);
+    }
+
+    public static Context getActivityContext() {
+        return context;
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -250,13 +273,12 @@ public class MainActivity extends AppCompatActivity
         }
     };
 
-    @SuppressLint("SetTextI18n")
     private void updateFragment() {
         starText = starText + "*";
 
         if (starText.length() >= 6) starText = "*";
 
-        client.synchronize(LoopJ.token, LoopJ.uname);
+        client.synchronize(token, username);
         JSONObject response = LoopJ.syncResponse;
 
         if (response != null) {
@@ -276,29 +298,28 @@ public class MainActivity extends AppCompatActivity
             while (keys.hasNext()) {
                 String key = (String) keys.next();
                 try {
-                    // set data for Analog Input and Digital Input
-                    if (key.contains("AI")) {
+                    if (key.contains("AI")) { // set data for Analog Input
                         currData = new JSONObject(response.get(key).toString());
 
                         if (currData.getString("status").equals("ACTIVE")) {
                             countUpdateAI++;
                             MonitorFragment.updateDataAI(currData);
                         }
-                    } else if (key.contains("DI")) {
+                    } else if (key.contains("DI")) { // set data for Digital Input
                         currData = new JSONObject(response.get(key).toString());
 
                         if (currData.getString("status").equals("ACTIVE")) {
                             countUpdateDI++;
                             MonitorFragment.updateDataDI(currData);
                         }
-                    } else if (key.contains("DO")) {
+                    } else if (key.contains("DO")) { // set data for Digital Output
                         currData = new JSONObject(response.get(key).toString());
 
                         if (currData.getString("status").equals("ACTIVE")) {
                             countUpdateDO++;
                             ControlFragment.updateDataDO(currData);
                         }
-                    } else {
+                    } else { // not widgets' data
                         Log.d("DATA", "updateFragment: Not Widget Attributes");
                     }
                 } catch (JSONException e) {
@@ -322,7 +343,7 @@ public class MainActivity extends AppCompatActivity
             if (!LoopJ.isBusy) {
                 Log.d("MAIN_ACTIVITY", "run: synced");
                 updateFragment();
-            } else Log.d("MAIN_ACTIVITY", "run: syncing");
+            } else Log.d("MAIN_ACTIVITY", "run: syncing...");
             mHandler.postDelayed(mRunnable, 1000);
         }
     };
