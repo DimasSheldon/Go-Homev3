@@ -175,7 +175,8 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_logout:
                 Toast.makeText(this, "Logging out", Toast.LENGTH_SHORT).show();
 
-                sharedPref.edit().putBoolean(getString(R.string.saved_log_stat), false).apply();
+//                sharedPref.edit().putBoolean(getString(R.string.saved_log_stat), false).apply();
+                sharedPref.edit().clear().apply();
 
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
@@ -190,7 +191,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void authenticate(String authStatus) {
+    public void authenticate(JSONObject authStatus) {
 
     }
 

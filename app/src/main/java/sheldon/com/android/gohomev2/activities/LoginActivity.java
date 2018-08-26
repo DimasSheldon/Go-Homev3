@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -48,32 +51,34 @@ public class LoginActivity extends AppCompatActivity implements LoopJListener {
         Log.d("LOG_STAT", "onCreate: LoginActvt " + logStat);
         if (logStat) {
             goToMainActivity();
+            onLoginSuccess();
         }
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-    }
+    public void authenticate(JSONObject response) {
+        Log.d("AUTHSTATUS", "authenticate: " + response);
+        try {
+            String logStat = response.getString("logStat");
+            if (logStat.equals("SUCCESS")) {
+                Toast.makeText(LoginActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
 
-    @Override
-    public void authenticate(String authStatus) {
-        if (LoopJ.auth.equals("SUCCESS")) {
-            Toast.makeText(LoginActivity.this, "Logged in", Toast.LENGTH_SHORT).show();
+                //make SharedPreferences object
+                sharedPref.edit().putBoolean(getString(R.string.saved_log_stat), true).apply();
+                sharedPref.edit().putString(getString(R.string.saved_user_name), response.getString("username")).apply();
+                sharedPref.edit().putString(getString(R.string.saved_full_name), response.getString("full_name")).apply();
+                sharedPref.edit().putString(getString(R.string.saved_email), response.getString("email")).apply();
+                sharedPref.edit().putString(getString(R.string.saved_role), response.getString("role")).apply();
+                sharedPref.edit().putString(getString(R.string.saved_token), response.getString("token")).apply();
 
-            //make SharedPreferences object
-            sharedPref.edit().putBoolean(getString(R.string.saved_log_stat), true).apply();
-            sharedPref.edit().putString(getString(R.string.saved_user_name), LoopJ.uname).apply();
-            sharedPref.edit().putString(getString(R.string.saved_full_name), LoopJ.fullName).apply();
-            sharedPref.edit().putString(getString(R.string.saved_email), LoopJ.email).apply();
-            sharedPref.edit().putString(getString(R.string.saved_role), LoopJ.role).apply();
-            sharedPref.edit().putString(getString(R.string.saved_token), LoopJ.token).apply();
-
-            goToMainActivity();
-            onLoginSuccess();
-        } else {
-            Toast.makeText(LoginActivity.this, LoopJ.auth, Toast.LENGTH_SHORT).show();
-            onLoginFailed();
+                goToMainActivity();
+                onLoginSuccess();
+            } else {
+                Toast.makeText(LoginActivity.this, logStat, Toast.LENGTH_SHORT).show();
+                onLoginFailed();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 

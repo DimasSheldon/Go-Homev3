@@ -19,7 +19,6 @@ public class LoopJ {
     private Context context;
     private LoopJListener loopJListener;
 
-    public static String uname, fullName, email, role, token, auth;
     public static JSONObject syncResponse;
     public static boolean isBusy;
 
@@ -65,20 +64,9 @@ public class LoopJ {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    uname = response.getString("username");
-                    fullName = response.getString("full_name");
-                    email = response.getString("email");
-                    role = response.getString("role");
-                    token = response.getString("token");
-                    auth = response.getString("logStat");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-//                Log.d("AUTHENTICATOR_AUTHSTAT", "onSuccess: " + auth);
-//                Log.d("AUTHENTICATOR_USERNAME", "onSuccess: " + uname);
-//                Log.d("AUTHENTICATOR_TOKEN", "onSuccess: " + token);
-                loopJListener.authenticate(auth);
+                Log.d(TAG, "onSuccess: " + response);
+
+                loopJListener.authenticate(response);
             }
 
             @Override
