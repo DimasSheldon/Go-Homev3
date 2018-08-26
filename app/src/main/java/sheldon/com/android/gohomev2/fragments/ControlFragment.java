@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -25,6 +27,7 @@ public class ControlFragment extends Fragment {
 
     private ImageButton mExpandButtonDO;
     private RecyclerView mRecyclerViewDO;
+    private static ShimmerFrameLayout digitalOutputShimmer;
     private static DigitalOutputAdapter digitalOutputAdapter;
     private static int positionDO = 0;
 
@@ -48,8 +51,10 @@ public class ControlFragment extends Fragment {
 
         mRecyclerViewDO = (RecyclerView) rootView.findViewById(R.id.rv_control);
         mExpandButtonDO = (ImageButton) rootView.findViewById(R.id.expand_button_do);
+        digitalOutputShimmer = (ShimmerFrameLayout) rootView.findViewById((R.id.rv_container_do));
 
         initiateEmptyWidgets();
+        digitalOutputShimmer.startShimmerAnimation();
 
         digitalOutputAdapter = new DigitalOutputAdapter(widgetsDO);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
@@ -101,6 +106,7 @@ public class ControlFragment extends Fragment {
 
     public static void resetPosition() {
         positionDO = 0;
+        digitalOutputShimmer.stopShimmerAnimation();
     }
 
     public static void removeUnusedD0Widgets() {

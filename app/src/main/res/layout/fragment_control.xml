@@ -53,7 +53,7 @@
                     android:text="@string/title_tv_digital_output"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                     android:textColor="@color/white"
-                    app:layout_constraintBottom_toTopOf="@+id/rv_control"
+                    app:layout_constraintBottom_toTopOf="@+id/rv_container_do"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="parent" />
@@ -75,17 +75,23 @@
                     app:srcCompat="@drawable/ic_expand_less_white_36dp"
                     tools:ignore="VectorDrawableCompat" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_control"
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/rv_container_do"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/recyclerview_margin_bottom"
-                    android:layout_marginTop="@dimen/recyclerview_margin_top"
-                    android:clipToPadding="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_digital_output" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_digital_output">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_control"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/recyclerview_margin_bottom"
+                        android:layout_marginTop="@dimen/recyclerview_margin_top"
+                        android:clipToPadding="false" />
+                </com.facebook.shimmer.ShimmerFrameLayout>
 
             </android.support.constraint.ConstraintLayout>
 

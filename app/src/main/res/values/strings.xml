@@ -28,10 +28,11 @@
     <string name="title_tv_digital_output">Digital Output</string>
     <string name="nav_header_title">Title</string>
     <string name="nav_header_subtitle">Subtitle</string>
-    <string name="saved_log_stat">LOG_STAT</string>
+    <string name="saved_log_stat">log_stat</string>
     <string name="saved_user_name">username</string>
     <string name="saved_full_name">fullname</string>
     <string name="saved_email">email</string>
     <string name="saved_role">role</string>
     <string name="saved_token">token</string>
+    <string name="snackbar_settings">Settings function will be added soon:)</string>
 </resources>

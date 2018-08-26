@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -55,19 +56,16 @@ public class MainActivity extends AppCompatActivity
     private MenuItem prevMenuItem;
     private LoopJ client;
     private Handler mHandler;
-    private TextView mFullName, mEmail, mArea, mLastUpdate, mLiveTime;
-    private static int navItemIndex = 0;
-    public static int countUpdateDO = 0;
-    public static int countUpdateDI = 0;
-    public static int countUpdateAI = 0;
-    public static String starText = "";
     private SharedPreferences sharedPref;
     private String username, fullname, email, role, token;
+    private TextView mFullName, mEmail, mArea, mLastUpdate, mLiveTime;
+    private static int navItemIndex;
+    public static int countUpdateDO, countUpdateDI, countUpdateAI;
+    public static String starText;
 
     @SuppressLint("StaticFieldLeak")
     private static Context context;
 
-    @SuppressLint("CommitPrefEdits")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,6 +152,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Toast.makeText(this, R.string.snackbar_settings, Toast.LENGTH_SHORT).show();
             return true;
         }
 

@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.facebook.shimmer.ShimmerFrameLayout;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,6 +28,7 @@ public class MonitorFragment extends Fragment {
 
     private ImageButton mExpandButtonAI, mExpandButtonDI;
     private RecyclerView mRecyclerViewAI, mRecyclerViewDI;
+    private static ShimmerFrameLayout analogInputShimmer, digitalInputShimmer;
     private static ArrayList<WidgetMonitor> widgetsAI, widgetsDI;
     private static AnalogInputAdapter analogInputAdapter;
     private static DigitalInputAdapter digitalInputAdapter;
@@ -53,8 +56,12 @@ public class MonitorFragment extends Fragment {
         mRecyclerViewDI = (RecyclerView) rootView.findViewById(R.id.rv_digital_input);
         mExpandButtonAI = (ImageButton) rootView.findViewById(R.id.expand_button_ai);
         mExpandButtonDI = (ImageButton) rootView.findViewById(R.id.expand_button_di);
+        analogInputShimmer = (ShimmerFrameLayout) rootView.findViewById(R.id.rv_container_ai);
+        digitalInputShimmer = (ShimmerFrameLayout) rootView.findViewById(R.id.rv_container_di);
 
         initiateEmptyWidgets();
+        analogInputShimmer.startShimmerAnimation();
+        digitalInputShimmer.startShimmerAnimation();
 
         analogInputAdapter = new AnalogInputAdapter(widgetsAI);
         digitalInputAdapter = new DigitalInputAdapter(widgetsDI);
@@ -125,6 +132,8 @@ public class MonitorFragment extends Fragment {
     public static void resetPosition() {
         positionAI = 0;
         positionDI = 0;
+        analogInputShimmer.stopShimmerAnimation();
+        digitalInputShimmer.stopShimmerAnimation();
     }
 
     public static void removeUnusedAIWidgets() {
